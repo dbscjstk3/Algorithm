@@ -1,0 +1,8 @@
+arr = []
+for _ in range(int(input())):
+    arr.append(int(input()))
+
+if arr.count(1) > arr.count(0):
+    print('Junhee is cute!')
+else:
+    print('Junhee is not cute!')
