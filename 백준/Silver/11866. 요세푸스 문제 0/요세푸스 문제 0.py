@@ -1,17 +1,14 @@
-from collections import deque
+import sys
 
+N, K = map(int,sys.stdin.readline().split())
+
+queue = [i for i in range(1,N+1)]
 answer = []
-
-N, K = map(int,input().split())
-queue = deque([i for i in range(1,N+1)])
-
+idx = 0
 while queue:
-    for i in range(K-1):
-        queue.append(queue.popleft())
-    answer.append(queue.popleft())
+    idx += K-1
+    if idx >= len(queue):
+        idx %= len(queue)
+    answer.append(str(queue.pop(idx)))
 
-print("<",end ='')
-for i in range(len(answer)-1):
-    print("%d, "%answer[i],end='')
-print(answer[-1],end='')
-print(">",end='')
+print('<' + ', '.join(answer) + '>')
