@@ -12,20 +12,20 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        int max = 0;
-        int min = 0;
-        int n = 1;
-        while (true) {
-            if (N % n == 0 && M % n == 0)
-                max = n;
-            if (n % N == 0 && n % M == 0) {
-                min = n;
-                break;
-            }
-            n++;
-        }
+        System.out.println(GCD(N,M));
+        System.out.println(LCM(N,M));
 
-        System.out.println(max);
-        System.out.println(min);
+    }
+    
+    //최대공약수 : Greatest Common Divisor
+    public static int GCD(int a, int b) {
+        if (b == 0) return a;
+        return GCD(b, a%b);
+    }
+
+    //최소공배수 : Least Common Multiple
+    public static int LCM(int a, int b) {
+        int gcd = GCD(a, b);
+        return (a*b)/gcd;
     }
 }
