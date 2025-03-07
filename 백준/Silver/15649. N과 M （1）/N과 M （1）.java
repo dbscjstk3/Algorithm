@@ -1,44 +1,40 @@
 import java.io.*;
-import java.util.StringTokenizer;
 
 public class Main {
     static int[] arr;
-    static int N, M;
     static boolean[] visit;
-    static BufferedWriter bw;
+    static int N, M;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        String[] input = br.readLine().split(" ");
 
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(input[0]);
+        M = Integer.parseInt(input[1]);
 
         arr = new int[M];
         visit = new boolean[N + 1];
-       
+
         permutation(0);
-        bw.flush();
-        bw.close();
+        System.out.print(sb.toString());
     }
 
-    static void permutation(int depth) throws IOException {
+    static void permutation(int depth) {
         if (depth == M) {
             for (int num : arr) {
-                bw.write(num + " ");
+                sb.append(num).append(" ");
             }
-            bw.write("\n");
-
+            sb.append("\n");
             return;
         }
 
         for (int i = 1; i <= N; i++) {
             if (!visit[i]) {
                 visit[i] = true;
-                arr[depth] = i; 
+                arr[depth] = i;
                 permutation(depth + 1);
-                visit[i] = false;                                                                                 
+                visit[i] = false;
             }
         }
     }
