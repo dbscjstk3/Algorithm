@@ -5,9 +5,11 @@ public class Main {
     static int[] arr;
     static int N, M;
     static boolean[] visit;
+    static BufferedWriter bw;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
@@ -17,14 +19,16 @@ public class Main {
         visit = new boolean[N + 1];
        
         permutation(0);
+        bw.flush();
+        bw.close();
     }
 
-    static void permutation(int depth) {
+    static void permutation(int depth) throws IOException {
         if (depth == M) {
             for (int num : arr) {
-                System.out.print(num + " ");
+                bw.write(num + " ");
             }
-            System.out.println();
+            bw.write("\n");
 
             return;
         }
