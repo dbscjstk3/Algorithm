@@ -3,7 +3,6 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int[] arr;
-    static int[] nums;
     static int N, M;
     static boolean[] visit;
 
@@ -14,12 +13,9 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        nums = new int[N + 1];
         arr = new int[M];
         visit = new boolean[N + 1];
-        for (int i = 1; i <= N; i++) {
-            nums[i] = i;
-        }
+       
         permutation(0);
     }
 
@@ -36,7 +32,7 @@ public class Main {
         for (int i = 1; i <= N; i++) {
             if (!visit[i]) {
                 visit[i] = true;
-                arr[depth] = nums[i]; 
+                arr[depth] = i; 
                 permutation(depth + 1);
                 visit[i] = false;                                                                                 
             }
