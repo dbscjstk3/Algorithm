@@ -8,38 +8,65 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+class Node {
+	Node pre;
+	char data;
+	Node next;
+	
+	Node() {}
+	
+	Node(char data, Node pre) {
+		this.data = data;
+		this.pre = pre;
+	}
+}
+
+
 class Main {
+	static Node head, current, node;
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int T = Integer.parseInt(br.readLine());
 		for (int tc = 0; tc < T; tc++) {
 			StringBuilder sb = new StringBuilder();
-			String str = br.readLine();
-			List<Character> pswd = new LinkedList<>();
 			
-			int idx = 0;
+			head = new Node();
+			current = head;
+			
+			String str = br.readLine();
 			for (int i = 0; i < str.length(); i++) {
 				char ch = str.charAt(i);
 				switch (ch) {
 				case '<' :
-					if (idx > 0) idx -= 1;
+					if (current.pre == null) break;
+					current = current.pre;
 					break;
 				case '>' :
-					if (idx < pswd.size()) idx += 1;
+					if (current.next == null) break;
+					current = current.next;
 					break;
 				case '-' :
-					if (idx > 0 && !pswd.isEmpty()) pswd.remove(idx-- -1);
+					if (current.pre == null) break;
+					current.pre.next = current.next;
+					if (current.next != null) current.next.pre = current.pre;
+					current = current.pre;
 					break;
 				default :
-					pswd.add(idx, ch);
-					idx++;
+					node = new Node(ch, current);
+					node.next = current.next;
+					if (current.next != null) current.next.pre = node;
+					current.next = node;
+					current = node;
 					break;
 				}
 			}
 			
-			for (char c : pswd) {
-				sb.append(c);
+			head = head.next;
+			while (head != null) {
+				sb.append(head.data);
+				head = head.next;
 			}
 			
 			System.out.println(sb.toString());
