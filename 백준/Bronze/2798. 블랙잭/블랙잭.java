@@ -1,35 +1,46 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+class Main {
+	static int[] nums;
+	static int N, M, max;
+	static int total;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int[] card = new int[N];
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		nums = new int[N];
 
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            card[i] = Integer.parseInt(st.nextToken());
-        }
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < N; i++) {
+			nums[i] = Integer.parseInt(st.nextToken());
+		}
+		
+		total = 0;
+		max = Integer.MIN_VALUE;
+		comb(0, 0, 0);
+		System.out.println(max);
+	}
 
-        int max = Integer.MIN_VALUE;
-        int total = 0;
-        for (int i = 0; i <= N - 3; i++) {
-            for (int j = i + 1; j <= N - 2; j++) {
-                for (int k = j + 1; k <= N - 1; k++) {
-                    total = card[i] + card[j] + card[k];
-                    if (total <= M) {
-                        max = Math.max(max, total);
-                    }
-                }
-            }
-        }
-
-        System.out.println(max);
-    }
+	static void comb(int depth, int start, int total) {
+		if (depth == 3) {
+			if (total > M) return;
+			
+			max = Math.max(max, total);
+			
+			return;
+		}
+		
+		
+		
+		for (int i = start; i < N; i++) {
+			comb(depth+1, i+1, total+nums[i]);
+		}
+	}
 }
