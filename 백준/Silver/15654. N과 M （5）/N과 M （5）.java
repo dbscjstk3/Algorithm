@@ -1,15 +1,16 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.List;
 import java.util.StringTokenizer;
 
 class Main {
 	static int[] nums;
-	static List<Integer> ans;
+	static int[] ans;
+	static boolean[] check;
 	static int N, M;
 	static StringBuilder sb;
 	
@@ -21,7 +22,8 @@ class Main {
 		M = Integer.parseInt(st.nextToken());
 		
 		nums = new int[N];
-		ans = new ArrayList<>();
+		ans = new int[M];
+		check = new boolean[N];
 		
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < N; i++) {
@@ -46,10 +48,11 @@ class Main {
 		}
 		
 		for (int i = 0; i < N; i++) {
-			if (!ans.contains(nums[i])) {
-				ans.add(depth,nums[i]);
+			if (!check[i]) {
+				check[i] = true;
+				ans[depth] = nums[i];
 				perm(depth+1);
-				ans.remove(depth);
+				check[i] = false;
 			}
 		}
 	}
