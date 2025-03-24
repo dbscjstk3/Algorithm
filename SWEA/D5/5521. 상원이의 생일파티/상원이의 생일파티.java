@@ -7,9 +7,9 @@ import java.util.StringTokenizer;
 
 public class Solution {
 	static int[][] graph;
-	static int V, E;
+	static int V, E, count;
 	static StringTokenizer st;
-	static List<Integer> ans;
+	static boolean[] visit;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,6 +20,7 @@ public class Solution {
 			V = Integer.parseInt(st.nextToken());
 			E = Integer.parseInt(st.nextToken());
 			graph = new int[V+1][V+1];
+			visit = new boolean[V+1];
 			
 			for (int i = 0; i < E; i++) {
 				st = new StringTokenizer(br.readLine());
@@ -30,19 +31,31 @@ public class Solution {
 				graph[b][a] = 1;
 			}
 			
-			ans = new ArrayList<>();
-			for (int i = 1; i <= V; i++) {
-				if (graph[1][i] == 1) {
-					if (!ans.contains(i)) ans.add(i);
-					for (int j = 2; j <= V; j++) {
-						if (graph[i][j] == 1 && !ans.contains(j)) {
-							ans.add(j);
-						}
-					}
-				}
-			}
+			count = 0;
+			recur(1,0);
 			
-			System.out.printf("#%d %d\n", tc, ans.size());
+			
+			
+			
+			System.out.printf("#%d %d\n", tc, count);
 		}
+	}
+	
+	static void recur(int row, int edge) {
+		if (edge == 2) {
+			return;
+		}
+		
+		for (int i = 2; i <= V; i++) {
+			if (graph[row][i] == 1) {
+				if (!visit[i]) {
+					visit[i] = true;
+					count++;
+				}
+				recur(i, edge+1);
+			}
+		}
+		
+		return;
 	}
 }
