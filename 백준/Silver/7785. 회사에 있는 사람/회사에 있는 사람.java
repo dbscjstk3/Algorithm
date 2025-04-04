@@ -4,10 +4,11 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		
 		int N = Integer.parseInt(br.readLine());
 		
-		Map<String, Integer> map = new HashMap<>();
+		Set<String> set = new TreeSet<>(Comparator.reverseOrder());
 		
 		for (int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -15,21 +16,13 @@ public class Main {
 			String name = st.nextToken();
 			String log = st.nextToken();
 			
-			map.put(name, map.getOrDefault(name, 0)+1);
+			if (log.equals("enter"))
+				set.add(name);
+			else
+				set.remove(name);
 		}
 		
-		List<String> ans = new ArrayList<>();
-		
-		for (String key : map.keySet()) {
-			int value = map.get(key);
-			
-			if (value % 2 != 0)
-				ans.add(key);
-		}
-		
-		ans.sort(Comparator.reverseOrder());
-		
-		for (String name : ans) {
+		for (String name : set) {
 			System.out.println(name);
 		}
 	}
