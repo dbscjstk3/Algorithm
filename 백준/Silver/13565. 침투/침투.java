@@ -5,7 +5,6 @@ public class Main {
 	static int M, N;
 	static int[][] map;
 	static boolean[][] visited;
-	static boolean possible = false;
 	static int[] dr = {-1,1,0,0};
 	static int[] dc = {0,0,-1,1};
 
@@ -26,32 +25,52 @@ public class Main {
 			}
 		}
 		
+		String ans = "NO";
 		for (int i = 0; i < N; i++) {
 			if (map[0][i] == 0 && !visited[0][i]) {
 				visited[0][i] = true;
-				dfs(0,i);
+				if (bfs(0,i)) {
+					ans = "YES";
+					break;
+				}
 			}
 		}
 		
-		System.out.println(possible ? "YES" : "NO");
+		System.out.println(ans);
 	}
 	
-	static void dfs(int x, int y) {
-		if (x == M-1) {
-			possible = true;
-			return;
+	static boolean bfs(int x, int y) {
+		Queue<Pos> q = new LinkedList<>();
+		q.add(new Pos(x,y));
+		
+		while (!q.isEmpty()) {
+			Pos curr = q.poll();
+			
+			if (curr.x == M-1) 
+				return true;
+			
+			for (int d = 0; d < 4; d++) {
+				int nr = curr.x + dr[d];
+				int nc = curr.y + dc[d];
+				
+				if (nr < 0 || nr >= M || nc < 0 || nc >= N) continue;
+				
+				if (visited[nr][nc] || map[nr][nc] == 1) continue;
+				
+				visited[nr][nc] = true;
+				q.add(new Pos(nr,nc));
+			}
 		}
 		
-		for (int d = 0; d < 4; d++) {
-			int nr = x + dr[d];
-			int nc = y + dc[d];
-			
-			if (nr < 0 || nr >= M || nc < 0 || nc >= N) continue;
-			
-			if (visited[nr][nc] || map[nr][nc] == 1) continue;
-			
-			visited[nr][nc] = true;
-			dfs(nr,nc);
+		return false;
+	}
+	
+	static class Pos {
+		int x, y;
+
+		public Pos(int x, int y) {
+			this.x = x;
+			this.y = y;
 		}
 	}
 }
