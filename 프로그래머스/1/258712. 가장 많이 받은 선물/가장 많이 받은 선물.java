@@ -35,11 +35,9 @@ public class Solution {
                 else if (table[i][j] == table[j][i]) {
                     if (giftScore[i] > giftScore[j]) giftCount[i]++;
                 }
+                
+                answer = Math.max(answer, giftCount[i]);
             }
-        }
-
-        for (int num : giftCount) {
-            answer = Math.max(answer, num);
         }
         
         return answer;
